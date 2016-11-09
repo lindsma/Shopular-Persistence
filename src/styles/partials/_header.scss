@@ -1,10 +1,40 @@
 header {
+    font-family: $montserrat;
     h1 {
-        font-family: $montserrat;
         font-size: 70px;
         margin: 10px 30px;
         font-weight: bold;
         color: $awesome;
         text-shadow: 2px 2px $seaFoamGreen;
+        display: inline;
+    }
+    .login {
+      float: right;
+      margin: 20px 30px;
+      font-size: 20px;
+
+      input {
+        height: 25px;
+        text-indent: 15px;
+      }
+    }
+
+    .submit {
+      width: 60%;
+      margin-top: 10px;
+      margin-left: 25px;
+      height: 30px;
+      border-radius: 5px;
+      font-size: 14px;
+
+      &:hover {
+        border: 3px solid $awesome;
+        background: $lapisLazuli;
+        color: white;
+      }
+    }
+
+    p.user-info {
+      margin-right: 90px;
     }
 }

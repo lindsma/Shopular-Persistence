@@ -1,22 +1,31 @@
 <!doctype html>
-<html lang="en" ng-app="inventory">
+<html lang="en" ng-app="inventoryApp">
 
 <head>
     <meta charset='UTF-8'>
     <meta content="width=device-width, initial-scale=1" name="viewport">
-    <title>Shopular</title>
+    <title>Shopular Persistence</title>
     <link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon">
     <link rel="icon" href="images/favicon.ico" type="image/x-icon">
     <link href="https://fonts.googleapis.com/css?family=Bree+Serif|Montserrat|Nunito|Rubik" rel="stylesheet">
     <link rel="stylesheet" href="lib/styles/main.min.css">
 </head>
 
-<body>
+<body ng-controller='InventoryController as inventory'>
     <header>
         <h1>Shopular</h1>
+        <div class='login' ng-controller='LoginController as login'>
+          <form ng-show='!loggedIn' name='loginForm' novalidate ng-submit='loginForm.$valid && loginUser(username)'>
+            <label for='username'>username</label>
+            <input name='username' ng-model='username' ng-required='true'>
+            <button type='submit' class='submit'>login</button>
+          </form>
+          <p ng-show='loggedIn' class='user-info' ng-cloak>Hello, {{username}}.</p>
+          <p ng-show='loggedIn' class='user-info' ng-cloak>{{timestamp}}</p>
+        </div>
     </header>
     <main>
-        <div ng-controller='InventoryController as inventory' class="container">
+        <div class="container">
             <table class='item-container'>
                 <caption>Inventory
                     <hr>
@@ -27,28 +36,28 @@
                     <th><a ng-click="orderByField='quantity';reverse=!reverse">Quantity</a></th>
                     <th><a ng-click="orderByField='color';reverse=!reverse">Color</a></th>
                 </tr>
-                <tr ng-repeat="item in inventory.items | orderBy:orderByField:reverse" class='item-info'>
-                    <td>{{item.name}}</td>
-                    <td>{{item.totalPrice | currency}} <img ng-show='item.discount' src='images/discount_tag.png' /></td>
-                    <td>{{item.quantity}}</td>
-                    <td>{{item.color}} </td>
+                <tr ng-repeat="item in allItems | orderBy:orderByField:reverse" class='item-info'>
+                    <td ng-cloak>{{item.name}}</td>
+                    <td ng-cloak>{{item.totalPrice | currency}} <img ng-show='discount' src='images/discount_tag.png' /></td>
+                    <td ng-cloak>{{item.quantity}}</td>
+                    <td ng-cloak>{{item.color}} </td>
                 </tr>
             </table>
             <div class='form-container'>
-                <form name='newItemForm' class='item-form' novalidate ng-submit='newItemForm.$valid && inventory.addItem()'>
-                    <ul class='form-fields'>
-                        <li><label for='name'> Add Item
-                  <input name='name' ng-model='inventory.NewItem.name' ng-required = 'true'></li>
-                  <li><label for='price'> Price
-                  <input name='price' type='number' ng-model='inventory.NewItem.price' ng-required = 'true'></li>
-                  <li><label for='quantity'> Quantity
-                  <input name='quantity' type='number' ng-model='inventory.NewItem.quantity' ng-required ='true'></li>
-                  <li><label for='color'> Color
-                  <input name='color' ng-model='inventory.NewItem.color' ng-required='true'></li>
-                  <li><label for='discount'> Discount
-                  <input name='discount' type='number' ng-model='inventory.NewItem.discount' ng-required='true'></li>
-                  <li><button class='submit' ng-disabled='newItemForm.$invalid' ng-click="resetForm()">Add Item</button></li>
-                </ul>
+                <form name='newItemForm' class='item-form' novalidate ng-submit='newItemForm.$valid && create(name, price, quantity, color, discount)'>
+                  <ul class='form-fields'>
+                        <li><label for='name'>Add Item</label>
+                        <input name='name' ng-model='name' ng-required = 'true'></li>
+                        <li><label for='price'>Price</label>
+                        <input name='price' type='number' ng-model='price'  ng-required = 'true'></li>
+                        <li><label for='quantity'>Quantity</label>
+                        <input name='quantity' type='number' ng-model='quantity'  ng-required ='true'></li>
+                        <li><label for='color'>Color</label>
+                        <input name='color' ng-model='color' ng-required='true'></li>
+                        <li><label for='discount'>Discount</label>
+                        <input name='discount' type='number' ng-model='discount' ng-required='true'></li>
+                        <li><button class='submit' ng-disabled='newItemForm.$invalid'>Add Item</button></li>
+                  </ul>
               </form>
             </div>
         </div>
@@ -57,9 +66,13 @@
 
     <script src="lib/js/vendor.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular.min.js"></script>
-    <script src="./angular-ui-router/release/angular-ui-router.min.js"></script>
-    <script src="./angular-local-storage/dist/angular-local-storage.min.js"></script>
+    <script src="angular-ui-router/release/angular-ui-router.min.js"></script>
+    <script src="angular-local-storage/dist/angular-local-storage.min.js"></script>
     <script src="lib/js/app.js"></script>
+    <script src="src/js/services/inventory.service.js"></script>
+    <script src="src/js/controllers/inventory.controller.js"></script>
+    <script src="src/js/controllers/login.controller.js"></script>
+
 </body>
 
 </html>
