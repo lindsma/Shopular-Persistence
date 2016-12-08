@@ -5,7 +5,7 @@ https://lindsma.github.io/Shopular-Persistence/
 ## Week 7 
 
 #### Objective:
-* Utilize Angular to build a web application for a shop's inventory. Allow the user to add items to the inventory, sort items in the table, and persist data to localStorage.
+Utilize Angular to build a web application for a shop's inventory. Allow the user to add items to the inventory, sort items in the table, and persist data to localStorage.
 
 #### Iron Yard Homework
 * [Week 1 - Basic Form Design](https://github.com/lindsma/basicFormDesign)
